@@ -6,9 +6,7 @@ const { DEFAULT_PREFIX, BOT_TOKEN, ERROR_LOGS_CHANNEL, YT_COOKIE } = require("./
 const { loadCommands } = require("./handler/loadCommands");
 const { loadEvents } = require("./handler/loadEvents");
 const { loadSlashCommands } = require("./handler/loadSlashCommands")
-const { loadPlayerEvents } = require("./handler/loadPlayerEvents");
 const { DiscordTogether } = require('discord-together');
-const { Player } = require('discord-player');
 const Enmap = require("enmap");
 
 const client = new Client({
@@ -30,30 +28,13 @@ const Cookie = YT_COOKIE;
 client.logger = Logger;
 client.utils = Util;
 client.say = Embeds;
-const player = new Player(client, {
-  leaveOnEnd: true,
-  leaveOnStop: true,
-  leaveOnEmpty: false,
-  leaveOnEmptyCooldown: 60000,
-  autoSelfDeaf: true,
-  initialVolume: 130,
-  ytdlDownloadOptions: {
-    requestOptions: {
-      headers: {
-        cookie: Cookie,
-      }
-    }
-  },
-});
 
-client.player = player;
 client.db = new Enmap({ name: "musicdb" });
 
 loadCommands(client);
 loadEvents(client);
-loadPlayerEvents(client);
 loadSlashCommands(client);
-checkValid();
+// checkValid();
 
 // Error Handling
 
